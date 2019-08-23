@@ -11,6 +11,8 @@ class App extends Component {
       users: [],
       loading: false
     };
+    // When we create new functions such as getUsers, we need to "bind" (bind is a Javascript-ism) to the main component like so
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   getUsers(){
@@ -23,6 +25,13 @@ class App extends Component {
         loading: false
       })
     );
+  }
+  
+  
+  handleSubmit(e) {
+    e.preventDefault();
+    this.getUsers();
+    console.log('More users loaded.');
   }
   
   componentWillMount() {
@@ -38,10 +47,13 @@ class App extends Component {
             <h3>{ user.name.first }</h3>
             <p>{user.email}</p>
             <hr/>
+            <form onSubmit={this.handleSubmit}>
+              <input type="submit" value="load users" />
+            </form>
         </div>
         )) 
       ) : (
-        <Loading message={this.state}/>
+        <Loading message= "Default message" />
        )} 
        </div>
        );
